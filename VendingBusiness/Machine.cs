@@ -44,17 +44,31 @@ namespace VendingBusiness
                 this.SessionBalance -= price;
             }
         }
+        private decimal ReturnOddMoney()
+        {
+            this.Session = false;
+            decimal oddMoney = this.SessionBalance;
+            this.SessionBalance = 0;
+            return oddMoney;
+        }
 
         public void GetMoney(decimal sum)
         {
             if (sum > 0)
             {
+                this.Balance += sum;
                 this.SessionBalance += sum;
             }
             if (!this.Session)
             {
                 this.Session = true;
             }
+        }
+        public decimal BuyAmericano(bool shugar)
+        {
+            this.BuyCoffee((decimal)Americano.Price);
+            this.MakeCoffee((double)Americano.Water, (double)Americano.Coffee, 0, shugar);
+            return this.ReturnOddMoney();
         }
         public void Repair()
         {
