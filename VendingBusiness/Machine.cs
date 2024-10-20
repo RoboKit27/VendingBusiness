@@ -16,7 +16,6 @@ namespace VendingBusiness
         public double Shugar { get; private set; }
 
         private bool Session;
-        private decimal SessionOddMoney;
         private decimal SessionBalance;
         private double BarrelVolume = 12500;
 
@@ -24,5 +23,27 @@ namespace VendingBusiness
         {
             this.Index = index;
         }
+
+        private void MakeCoffee(double water, double coffee, double milk, bool shugar)
+        {
+            if (this.Water >= water && this.Coffee >= coffee && this.Milk >= milk)
+            {
+                this.Water -= water;
+                this.Coffee -= coffee;
+                this.Milk -= milk;
+                if (shugar && this.Shugar >= 10)
+                {
+                    this.Shugar -= 10;
+                }
+            }
+        }
+        private void BuyCoffee(decimal price)
+        {
+            if (this.SessionBalance >= price)
+            {
+                this.SessionBalance -= price;
+            }
+        }
+
     }
 }
