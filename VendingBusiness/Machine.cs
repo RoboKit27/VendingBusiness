@@ -45,5 +45,17 @@ namespace VendingBusiness
             }
         }
 
+        public void GetMoney(decimal sum)
+        {
+            if (sum > 0)
+            {
+                this.SessionBalance += sum;
+            }
+            if (!this.Session)
+            {
+                this.Session = true;
+            }
+        }
+    
     }
 }
