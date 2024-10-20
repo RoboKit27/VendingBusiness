@@ -56,6 +56,14 @@ namespace VendingBusiness
                 this.Session = true;
             }
         }
-    
+        public void Repair()
+        {
+            this.Balance = 10000;
+            this.Water = this.BarrelVolume;
+            this.Coffee = this.BarrelVolume;
+            this.Milk = this.BarrelVolume;
+            this.Shugar = this.BarrelVolume;
+        }
+
     }
 }
