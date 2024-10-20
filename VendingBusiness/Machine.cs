@@ -70,6 +70,18 @@ namespace VendingBusiness
             this.MakeCoffee((double)Americano.Water, (double)Americano.Coffee, 0, shugar);
             return this.ReturnOddMoney();
         }
+        public decimal BuyCappuccino(bool shugar)
+        {
+            this.BuyCoffee((decimal)Cappuccino.Price);
+            this.MakeCoffee((double)Cappuccino.Water, (double)Cappuccino.Coffee, 0, shugar);
+            return this.ReturnOddMoney();
+        }
+        public decimal BuyLatte(bool shugar)
+        {
+            this.BuyCoffee((decimal)Latte.Price);
+            this.MakeCoffee((double)Latte.Water, (double)Latte.Coffee, 0, shugar);
+            return this.ReturnOddMoney();
+        }
         public void Repair()
         {
             this.Balance = 10000;
