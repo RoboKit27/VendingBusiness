@@ -16,15 +16,58 @@ namespace VendingBusiness
         public double Shugar { get; private set; }
         public Error ErrorStatus { get; private set; }
 
-        private decimal SessionBalance;
-        private double BarrelVolume = 12500;
+        private decimal _sessionBalance;
+        private double _barrelVolume = 12500;
 
         public Machine(int index)
         {
             this.Index = index;
             this.ErrorStatus = Error.Null;
         }
-
+        
+        public void GetMoney(decimal sum)
+        {
+            if (sum > 0)
+            {
+                this.Balance += sum;
+                this._sessionBalance += sum;
+                if (this.ErrorStatus == Error.FewMoney)
+                {
+                    this.ErrorStatus = Error.Null;
+                }
+            }
+        }
+        public decimal BuyAmericano(bool shugar)
+        {
+            this.BuyCoffee((decimal)Americano.Price);
+            this.MakeCoffee((double)Americano.Water, (double)Americano.Coffee, 0, shugar);
+            return this.ReturnOddMoney();
+        }
+        public decimal BuyCappuccino(bool shugar)
+        {
+            this.BuyCoffee((decimal)Cappuccino.Price);
+            this.MakeCoffee((double)Cappuccino.Water, (double)Cappuccino.Coffee, (double)Cappuccino.Milk, shugar);
+            return this.ReturnOddMoney();
+        }
+        public decimal BuyLatte(bool shugar)
+        {
+            this.BuyCoffee((decimal)Latte.Price);
+            this.MakeCoffee((double)Latte.Water, (double)Latte.Coffee, (double)Latte.Milk, shugar);
+            return this.ReturnOddMoney();
+        }
+        public void Repair()
+        {
+            this.Balance = 10000;
+            this.Water = this._barrelVolume;
+            this.Coffee = this._barrelVolume;
+            this.Milk = this._barrelVolume;
+            //this.Shugar = this.BarrelVolume;
+            if (this.ErrorStatus == Error.NotWater && this.ErrorStatus == Error.NotCoffee && this.ErrorStatus == Error.NotMilk && this.ErrorStatus == Error.NotShugar)
+            {
+                this.ErrorStatus = Error.Null;
+            }
+        }
+        
         private void MakeCoffee(double water, double coffee, double milk, bool shugar)
         {
             if (this.ErrorStatus == Error.Null)
@@ -65,9 +108,9 @@ namespace VendingBusiness
         }
         private void BuyCoffee(decimal price)
         {
-            if (this.SessionBalance >= price && this.ErrorStatus == Error.Null)
+            if (this._sessionBalance >= price && this.ErrorStatus == Error.Null)
             {
-                this.SessionBalance -= price;
+                this._sessionBalance -= price;
             }
             else
             {
@@ -78,8 +121,8 @@ namespace VendingBusiness
         {
             if (this.ErrorStatus == Error.Null)
             {
-                decimal oddMoney = this.SessionBalance;
-                this.SessionBalance = 0;
+                decimal oddMoney = this._sessionBalance;
+                this._sessionBalance = 0;
                 return oddMoney;
             }
             else
@@ -109,49 +152,6 @@ namespace VendingBusiness
             else if (errorCode == Error.NotShugar)
             {
                 Console.WriteLine("Закончился сахар!");
-            }
-        }
-
-        public void GetMoney(decimal sum)
-        {
-            if (sum > 0)
-            {
-                this.Balance += sum;
-                this.SessionBalance += sum;
-                if (this.ErrorStatus == Error.FewMoney)
-                {
-                    this.ErrorStatus = Error.Null;
-                }
-            }
-        }
-        public decimal BuyAmericano(bool shugar)
-        {
-            this.BuyCoffee((decimal)Americano.Price);
-            this.MakeCoffee((double)Americano.Water, (double)Americano.Coffee, 0, shugar);
-            return this.ReturnOddMoney();
-        }
-        public decimal BuyCappuccino(bool shugar)
-        {
-            this.BuyCoffee((decimal)Cappuccino.Price);
-            this.MakeCoffee((double)Cappuccino.Water, (double)Cappuccino.Coffee, (double)Cappuccino.Milk, shugar);
-            return this.ReturnOddMoney();
-        }
-        public decimal BuyLatte(bool shugar)
-        {
-            this.BuyCoffee((decimal)Latte.Price);
-            this.MakeCoffee((double)Latte.Water, (double)Latte.Coffee, (double)Latte.Milk, shugar);
-            return this.ReturnOddMoney();
-        }
-        public void Repair()
-        {
-            this.Balance = 10000;
-            this.Water = this.BarrelVolume;
-            this.Coffee = this.BarrelVolume;
-            this.Milk = this.BarrelVolume;
-            //this.Shugar = this.BarrelVolume;
-            if (this.ErrorStatus == Error.NotWater && this.ErrorStatus == Error.NotCoffee && this.ErrorStatus == Error.NotMilk && this.ErrorStatus == Error.NotShugar)
-            {
-                this.ErrorStatus = Error.Null;
             }
         }
 
