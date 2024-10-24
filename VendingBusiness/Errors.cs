@@ -2,13 +2,13 @@
 {
     public enum Error
     {
-        Null=-1,
+        Null=0,
 
-        FewMoney=0,
+        FewMoney=1,
 
-        NotWater=1,
-        NotCoffee=2,
-        NotMilk=3,
-        NotShugar=4
+        NotWater=2,
+        NotCoffee=3,
+        NotMilk=4,
+        NotShugar=5
     }
 }
