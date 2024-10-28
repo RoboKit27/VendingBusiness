@@ -1,6 +1,6 @@
 ﻿namespace VendingBusiness
 {
-    public static class MachineOptions
+    public static class CoffeeMachineOptions
     {
         public const double BarrelVolume = 12500;
 
