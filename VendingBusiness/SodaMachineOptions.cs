@@ -9,6 +9,10 @@ namespace VendingBusiness
     public static class SodaMachineOptions
     {
         public const int MaxJarCount = 48;
+
+        public const decimal ColaPrice = 84;
+        public const decimal PepsiPrice = 86;
+        public const decimal SpritePrice = 69;
     }
 
 }

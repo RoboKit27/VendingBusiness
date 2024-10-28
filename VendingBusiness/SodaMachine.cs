@@ -1,6 +1,6 @@
 ﻿namespace VendingBusiness
 {
-    public class SodaMachine : Machine
+    public class SodaMachine : BaseMachine
     {
 
         public int ColaAmount { get; private set; }
@@ -16,7 +16,7 @@
 
         public decimal BuyCola()
         {
-            this.BuyDrink((decimal)Cola.Price);
+            this.BuyDrink(SodaMachineOptions.ColaPrice);
             if (this.ColaAmount != 0)
             {
                 this.ColaAmount -= 1;
@@ -29,7 +29,7 @@
         }
         public decimal BuyPepsi()
         {
-            this.BuyDrink((decimal)Pepsi.Price);
+            this.BuyDrink(SodaMachineOptions.PepsiPrice);
             if (this.PepsiAmount != 0)
             {
                 this.PepsiAmount -= 1;
@@ -42,7 +42,7 @@
         }
         public decimal BuySprite()
         {
-            this.BuyDrink((decimal)Sprite.Price);
+            this.BuyDrink(SodaMachineOptions.SpritePrice);
             if (this.SpriteAmount != 0)
             {
                 this.SpriteAmount -= 1;

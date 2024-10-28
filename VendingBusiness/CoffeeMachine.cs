@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VendingBusiness
 {
-    public class CoffeeMachine : Machine
+    public class CoffeeMachine : BaseMachine
     {
 
         public double Water { get; private set; }

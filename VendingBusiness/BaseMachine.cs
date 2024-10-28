@@ -1,6 +1,6 @@
 ﻿namespace VendingBusiness
 {
-    public class Machine
+    public class BaseMachine
     {
 
         public int Index { get; protected set; }
@@ -14,7 +14,7 @@
         };
         protected decimal _sessionBalance;
 
-        public Machine(int index)
+        public BaseMachine(int index)
         {
             this.Index = index;
             this.Error = "Null";
