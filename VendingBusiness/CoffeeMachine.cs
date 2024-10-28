@@ -19,23 +19,27 @@ namespace VendingBusiness
         public CoffeeMachine(int index) : base(index)
         {
             _coffeeRecipes = CoffeeMachineOptions.GetCoffeeRecipes();
+            this._errorList.Add("NotWater");
+            this._errorList.Add("NotCoffee");
+            this._errorList.Add("NotMilk");
+            this._errorList.Add("NotShugar");
         }
 
         public decimal BuyAmericano(bool shugar)
         {
-            this.BuyCoffee(this._coffeeRecipes[0].Price);
+            this.BuyDrink(this._coffeeRecipes[0].Price);
             this.MakeCoffee(this._coffeeRecipes[0], shugar);
             return this.ReturnOddMoney();
         }
         public decimal BuyCappuccino(bool shugar)
         {
-            this.BuyCoffee(this._coffeeRecipes[1].Price);
+            this.BuyDrink(this._coffeeRecipes[1].Price);
             this.MakeCoffee(this._coffeeRecipes[1], shugar);
             return this.ReturnOddMoney();
         }
         public decimal BuyLatte(bool shugar)
         {
-            this.BuyCoffee(this._coffeeRecipes[2].Price);
+            this.BuyDrink(this._coffeeRecipes[2].Price);
             this.MakeCoffee(this._coffeeRecipes[2], shugar);
             return this.ReturnOddMoney();
         }
@@ -46,15 +50,15 @@ namespace VendingBusiness
             this.Coffee = CoffeeMachineOptions.BarrelVolume;
             this.Milk = CoffeeMachineOptions.BarrelVolume;
             this.Shugar = CoffeeMachineOptions.BarrelVolume;
-            if (this.ErrorStatus == Error.NotWater && this.ErrorStatus == Error.NotCoffee && this.ErrorStatus == Error.NotMilk && this.ErrorStatus == Error.NotShugar)
+            if (this._errorList.IndexOf(this.Error) > 1 && this._errorList.IndexOf(this.Error) < 6)
             {
-                this.ErrorStatus = Error.Null;
+                this.Error = "Null";
             }
         }
 
         private void MakeCoffee(CoffeeRecipe recipe, bool shugar)
         {
-            if (this.ErrorStatus == Error.Null)
+            if (this.Error == "Null")
             {
                 if (this.Water >= recipe.Water && this.Coffee >= recipe.Coffee && this.Milk >= recipe.Milk)
                 {
@@ -69,7 +73,7 @@ namespace VendingBusiness
                         }
                         else
                         {
-                            this.CompileError(Error.NotShugar);
+                            this.Error = "NotShugar";
                         }
                     }
                 }
@@ -77,31 +81,20 @@ namespace VendingBusiness
                 {
                     if (this.Water < recipe.Water)
                     {
-                        this.CompileError(Error.NotWater);
+                        this.Error = "NotWater";
                     }
                     else if (this.Coffee < recipe.Coffee)
                     {
-                        this.CompileError(Error.NotCoffee);
+                        this.Error = "NotCoffee";
                     }
                     else
                     {
-                        this.CompileError(Error.NotMilk);
+                        this.Error = "NotMilk";
                     }
                 }
             }
         }
-        private void BuyCoffee(decimal price)
-        {
-            if (this._sessionBalance >= price && this.ErrorStatus == Error.Null)
-            {
-                Console.WriteLine($"{price} {this._sessionBalance}");
-                this._sessionBalance -= price;
-            }
-            else
-            {
-                this.CompileError(Error.FewMoney);
-            }
-        }
 
     }
+
 }

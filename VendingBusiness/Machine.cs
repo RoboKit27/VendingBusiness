@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VendingBusiness
+﻿namespace VendingBusiness
 {
     public class Machine
     {
 
-        public int Index { get; private protected set; }
-        public decimal Balance { get; private protected set; }
-        public Error ErrorStatus { get; private protected set; }
+        public int Index { get; protected set; }
+        public decimal Balance { get; protected set; }
+        public String Error { get; protected set; }
 
-        private protected decimal _sessionBalance;
+        protected List<String> _errorList = new List<String>()
+        {
+            "Null",
+            "FewMoney"
+        };
+        protected decimal _sessionBalance;
 
         public Machine(int index)
         {
             this.Index = index;
-            this.ErrorStatus = Error.Null;
+            this.Error = "Null";
         }
 
         public void GetMoney(decimal sum)
@@ -27,15 +26,15 @@ namespace VendingBusiness
             {
                 this.Balance += sum;
                 this._sessionBalance += sum;
-                if (this.ErrorStatus == Error.FewMoney)
+                if (this.Error == "FewMoney")
                 {
-                    this.ErrorStatus = Error.Null;
+                    this.Error = "Null";
                 }
             }
         }
         protected decimal ReturnOddMoney()
         {
-            if (this.ErrorStatus == Error.Null)
+            if (this.Error == "Null")
             {
                 decimal oddMoney = this._sessionBalance;
                 this._sessionBalance = 0;
@@ -46,28 +45,19 @@ namespace VendingBusiness
                 return 0;
             }
         }
-        protected void CompileError(Error errorCode)
+        protected void BuyDrink(decimal price)
         {
-            this.ErrorStatus = errorCode;
-            if (errorCode == Error.FewMoney)
+            if (this._sessionBalance >= price)
             {
-                Console.WriteLine("Внесённой суммы денег не хватает! Пополните баланс!");
+                this._sessionBalance -= price;
+                if (this.Error == "FewMoney")
+                {
+                    this.Error = "Null";
+                }
             }
-            else if (errorCode == Error.NotWater)
+            else
             {
-                Console.WriteLine("Закончилась вода!");
-            }
-            else if (errorCode == Error.NotCoffee)
-            {
-                Console.WriteLine("Закончилось кофе!");
-            }
-            else if (errorCode == Error.NotMilk)
-            {
-                Console.WriteLine("Закончилось молоко!");
-            }
-            else if (errorCode == Error.NotShugar)
-            {
-                Console.WriteLine("Закончился сахар!");
+                this.Error = "FewMoney";
             }
         }
 
