@@ -19,77 +19,77 @@ namespace VendingBusiness
         public CoffeeMachine(int index) : base(index)
         {
             _coffeeRecipes = CoffeeMachineOptions.GetCoffeeRecipes();
-            this._errorList.Add("NotWater");
-            this._errorList.Add("NotCoffee");
-            this._errorList.Add("NotMilk");
-            this._errorList.Add("NotShugar");
+            _errorList.Add("NotWater");
+            _errorList.Add("NotCoffee");
+            _errorList.Add("NotMilk");
+            _errorList.Add("NotShugar");
         }
 
         public decimal BuyAmericano(bool shugar)
         {
-            this.BuyDrink(this._coffeeRecipes[0].Price);
-            this.MakeCoffee(this._coffeeRecipes[0], shugar);
-            return this.ReturnOddMoney();
+            BuyDrink(_coffeeRecipes[0].Price);
+            MakeCoffee(_coffeeRecipes[0], shugar);
+            return ReturnOddMoney();
         }
         public decimal BuyCappuccino(bool shugar)
         {
-            this.BuyDrink(this._coffeeRecipes[1].Price);
-            this.MakeCoffee(this._coffeeRecipes[1], shugar);
-            return this.ReturnOddMoney();
+            BuyDrink(_coffeeRecipes[1].Price);
+            MakeCoffee(_coffeeRecipes[1], shugar);
+            return ReturnOddMoney();
         }
         public decimal BuyLatte(bool shugar)
         {
-            this.BuyDrink(this._coffeeRecipes[2].Price);
-            this.MakeCoffee(this._coffeeRecipes[2], shugar);
-            return this.ReturnOddMoney();
+            BuyDrink(_coffeeRecipes[2].Price);
+            MakeCoffee(_coffeeRecipes[2], shugar);
+            return ReturnOddMoney();
         }
         public void Repair()
         {
-            this.Balance = 10000;
-            this.Water = CoffeeMachineOptions.BarrelVolume;
-            this.Coffee = CoffeeMachineOptions.BarrelVolume;
-            this.Milk = CoffeeMachineOptions.BarrelVolume;
-            this.Shugar = CoffeeMachineOptions.BarrelVolume;
-            if (this._errorList.IndexOf(this.Error) > 1 && this._errorList.IndexOf(this.Error) < 6)
+            Balance = 10000;
+            Water = CoffeeMachineOptions.BarrelVolume;
+            Coffee = CoffeeMachineOptions.BarrelVolume;
+            Milk = CoffeeMachineOptions.BarrelVolume;
+            Shugar = CoffeeMachineOptions.BarrelVolume;
+            if (_errorList.IndexOf(Error) > 1 && _errorList.IndexOf(Error) < 6)
             {
-                this.Error = "Null";
+                Error = "Null";
             }
         }
 
         private void MakeCoffee(CoffeeRecipe recipe, bool shugar)
         {
-            if (this.Error == "Null")
+            if (Error == "Null")
             {
-                if (this.Water >= recipe.Water && this.Coffee >= recipe.Coffee && this.Milk >= recipe.Milk)
+                if (Water >= recipe.Water && Coffee >= recipe.Coffee && Milk >= recipe.Milk)
                 {
-                    this.Water -= recipe.Water;
-                    this.Coffee -= recipe.Coffee;
-                    this.Milk -= recipe.Milk;
+                    Water -= recipe.Water;
+                    Coffee -= recipe.Coffee;
+                    Milk -= recipe.Milk;
                     if (shugar)
                     {
-                        if (this.Shugar >= 10)
+                        if (Shugar >= 10)
                         {
-                            this.Shugar -= 10;
+                            Shugar -= 10;
                         }
                         else
                         {
-                            this.Error = "NotShugar";
+                            Error = "NotShugar";
                         }
                     }
                 }
                 else
                 {
-                    if (this.Water < recipe.Water)
+                    if (Water < recipe.Water)
                     {
-                        this.Error = "NotWater";
+                        Error = "NotWater";
                     }
-                    else if (this.Coffee < recipe.Coffee)
+                    else if (Coffee < recipe.Coffee)
                     {
-                        this.Error = "NotCoffee";
+                        Error = "NotCoffee";
                     }
                     else
                     {
-                        this.Error = "NotMilk";
+                        Error = "NotMilk";
                     }
                 }
             }

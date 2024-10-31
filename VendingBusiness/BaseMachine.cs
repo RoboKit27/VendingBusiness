@@ -1,6 +1,6 @@
 ﻿namespace VendingBusiness
 {
-    public class BaseMachine
+    public abstract class BaseMachine
     {
 
         public int Index { get; protected set; }
@@ -13,6 +13,7 @@
             "FewMoney"
         };
         protected decimal _sessionBalance;
+        protected decimal _salesPrice;
 
         public BaseMachine(int index)
         {
@@ -50,6 +51,7 @@
             if (this._sessionBalance >= price)
             {
                 this._sessionBalance -= price;
+                this._salesPrice += price;
                 if (this.Error == "FewMoney")
                 {
                     this.Error = "Null";
@@ -60,6 +62,10 @@
                 this.Error = "FewMoney";
             }
         }
-
+        public override bool Equals(object? obj)
+        {
+            return obj is BaseMachine machine &&
+                   _salesPrice == machine._salesPrice;
+        }
     }
 }
