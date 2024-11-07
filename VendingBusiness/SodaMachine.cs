@@ -53,7 +53,7 @@
             }
             return this.ReturnOddMoney();
         }
-        public void Repair()
+        public override void Repair()
         {
             this.Balance = 10000;
             this.ColaAmount = SodaMachineOptions.MaxJarCount;
@@ -63,6 +63,23 @@
             {
                 this.Error = "Null";
             }
+        }
+        public override bool GetRepairNeed()
+        {
+            List<double> stats = new List<double>()
+            {
+                this.ColaAmount,
+                this.PepsiAmount,
+                this.SpriteAmount
+            };
+            foreach (double item in stats)
+            {
+                if (item <= _treshold)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

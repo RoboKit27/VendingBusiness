@@ -43,7 +43,7 @@ namespace VendingBusiness
             MakeCoffee(_coffeeRecipes[2], shugar);
             return ReturnOddMoney();
         }
-        public void Repair()
+        public override void Repair()
         {
             Balance = 10000;
             Water = CoffeeMachineOptions.BarrelVolume;
@@ -54,6 +54,24 @@ namespace VendingBusiness
             {
                 Error = "Null";
             }
+        }
+        public override bool GetRepairNeed()
+        {
+            List<double> stats = new List<double>()
+            {
+                this.Water,
+                this.Coffee,
+                this.Milk,
+                this.Shugar
+            };
+            foreach (double item in stats)
+            {
+                if (item <= _treshold)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void MakeCoffee(CoffeeRecipe recipe, bool shugar)

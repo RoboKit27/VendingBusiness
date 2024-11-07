@@ -6,6 +6,7 @@
         public int Index { get; protected set; }
         public decimal Balance { get; protected set; }
         public String Error { get; protected set; }
+        public decimal Earnings { get; protected set; }
 
         protected List<String> _errorList = new List<String>()
         {
@@ -13,7 +14,7 @@
             "FewMoney"
         };
         protected decimal _sessionBalance;
-        protected decimal _salesPrice;
+        protected double _treshold = 300;
 
         public BaseMachine(int index)
         {
@@ -21,6 +22,9 @@
             this.Error = "Null";
         }
 
+        public abstract decimal BuyProduct(int productId);
+        public abstract void Repair();
+        public abstract bool GetRepairNeed();
         public void GetMoney(decimal sum)
         {
             if (sum > 0)
@@ -51,7 +55,7 @@
             if (this._sessionBalance >= price)
             {
                 this._sessionBalance -= price;
-                this._salesPrice += price;
+                this.Earnings += price;
                 if (this.Error == "FewMoney")
                 {
                     this.Error = "Null";
@@ -65,7 +69,7 @@
         public override bool Equals(object? obj)
         {
             return obj is BaseMachine machine &&
-                   _salesPrice == machine._salesPrice;
+                   Earnings == machine.Earnings;
         }
     }
 }
