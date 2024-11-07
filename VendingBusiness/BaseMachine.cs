@@ -22,7 +22,6 @@
             this.Error = "Null";
         }
 
-        public abstract decimal BuyProduct(int productId);
         public abstract void Repair();
         public abstract bool GetRepairNeed();
         public void GetMoney(decimal sum)
